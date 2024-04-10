@@ -5,22 +5,29 @@ import About from "./routes/About";
 import Product from "./routes/Product";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ErrorPage from "./routes/404";
+import {Error404Page, ServerErrorPage} from "./routes/404";
 import Index from "./routes/Index";
+import Products from "./routes/Products";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Index />,
-    errorElement: <ErrorPage />
+    errorElement: <Error404Page />
   },
   {
     path: "/about",
     element: <About />,
   },
   {
+    path: "/products",
+    element: <Products />,
+    errorElement: <ServerErrorPage />
+  },
+  {
     path: "/products/:productId",
     element: <Product />,
+    errorElement: <ServerErrorPage />
   },
 ]);
 

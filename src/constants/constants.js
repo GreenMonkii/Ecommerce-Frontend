@@ -6,7 +6,7 @@ export function sumArray(arr) {
   }
 }
 
-export const average = (arr) => Math.ceil(sumArray(arr) / arr.length);
+export const average = (arr) => Math.round(sumArray(arr) / arr.length);
 
 export function range(end, start = 0, step = 1) {
   return Array.from(
@@ -14,3 +14,15 @@ export function range(end, start = 0, step = 1) {
     (_, index) => start + index * step
   );
 }
+
+export const Error404 = {
+  title: "404 - PAGE NOT FOUND",
+  message:
+    "We're sorry, but the page you are looking for cannot be found. Please check the URL you entered or click the button below to go back to our homepage.",
+};
+
+export const ServerError = {
+  title: "OOPS! SOMETHING BROKE.",
+  message:
+    "We're sorry, but the page you are looking for cannot be reached. Please refresh the page or click the button below to go back to our homepage.",
+};

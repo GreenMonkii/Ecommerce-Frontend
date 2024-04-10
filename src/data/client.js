@@ -1,7 +1,6 @@
-export const getProducts = async () => {
-  console.log("Called Get Products");
-  console.log("API URL", process.env.REACT_APP_API_URL);
-  const response = await fetch(`${process.env.REACT_APP_API_URL}/products`);
+export const getProducts = async (query={}) => {
+  const queryParams = new URLSearchParams(query)
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/products?${queryParams}`);
   return response.ok ? response.json() : {};
 };
 

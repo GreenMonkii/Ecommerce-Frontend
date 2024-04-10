@@ -9,7 +9,7 @@ const Navbar = (props) => {
   return (
     <nav className="navbar navbar-expand-md bg-body">
       <div className="container-fluid">
-        <Link className="navbar-brand" to={`/`}>
+        <Link className="navbar-brand" to={`/`} style={{color: "#A0373E"}}>
           Buzzmart
         </Link>
         <button

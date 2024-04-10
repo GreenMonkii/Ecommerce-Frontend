@@ -2,6 +2,8 @@ import { getProducts } from "../data/client";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import ProductCard from "../components/ProductCard";
 
 // A product is a Javascript Object to represent the model that we will create in the backend.
 // It consists of the following properties: Name, Price, Description, Image, Retailer, Category, Featured.
@@ -11,13 +13,13 @@ const Index = (props) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getProducts().then((res) => {
+    getProducts({"perPage": 4}).then((res) => {
       setProducts(res);
       setLoading(false);
     });
   }, []);
 
-  const featuredProducts = products.filter((it) => it.featured === true);
+  const featuredProducts = products.filter((it) => it.Featured === true);
 
   return (
     !loading && (
@@ -110,55 +112,10 @@ const Index = (props) => {
           </div>
           <div className="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
             {products
-              .filter((it) => it.featured === false)
-              .map((product, key) => {
-                return (
-                  <Link
-                    to={`/products/${product._id}`}
-                    preventScrollReset={true}
-                    key={key}
-                  >
-                    <div className="col">
-                      <div className="card">
-                        <img
-                          className="card-img-top w-100 d-block fit-cover"
-                          src={`${process.env.REACT_APP_API_URL}/img/${product.Image[0]}`}
-                          alt=""
-                        />
-                        <div className="card-body p-4">
-                          <p className="text-primary card-text mb-0">
-                            ${product.price}
-                          </p>
-
-                          <h4 className="card-title">
-                            <span style={{ color: "rgb(160, 55, 62)" }}>
-                              {product.name}
-                            </span>
-                          </h4>
-                          <p className="card-text">{product.description}</p>
-                          <div className="d-flex">
-                            <img
-                              className="rounded-circle flex-shrink-0 me-3 fit-cover"
-                              width={50}
-                              height={50}
-                              src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png"
-                              alt=""
-                            />
-                            <div>
-                              <p className="fw-bold mb-0">
-                                {product.retailer.name}
-                              </p>
-                              <p className="text-muted mb-0">
-                                {product.category}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                );
-              })}
+              .filter((it) => it.Featured === false)
+              .map((product, key) => (
+                <ProductCard product={product} key={key} />
+              ))}
           </div>
         </div>
         <div className="container">
@@ -194,20 +151,9 @@ const Index = (props) => {
                           >
                             <a
                               className="btn btn-light btn-lg"
+                              id="check-it-out"
                               role="button"
                               href="/"
-                              style={{
-                                borderRadius: 10,
-                                height: "auto",
-                                paddingTop: 16,
-                                paddingBottom: 16,
-                                width: "40%",
-                                margin: 0,
-                                marginBottom: 0,
-                                marginRight: 0,
-                                paddingRight: 16,
-                                paddingLeft: 16,
-                              }}
                             >
                               <span style={{ color: "rgb(40, 34, 29)" }}>
                                 CHECK IT OUT
@@ -232,6 +178,7 @@ const Index = (props) => {
               </section>
             </div>
           </div>
+          <Footer />
         </div>
       </>
     )
