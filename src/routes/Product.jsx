@@ -63,7 +63,11 @@ const Product = () => {
                 }}
               >
                 {range(average(product.Ratings)).map((_, key) => (
-                  <i className="fas fa-star" style={{ color: "#FFD700" }} key={key}/>
+                  <i
+                    className="fas fa-star"
+                    style={{ color: "#FFD700" }}
+                    key={key}
+                  />
                 ))}
               </div>
               <span
@@ -96,22 +100,22 @@ const Product = () => {
               <hr />
               <input
                 type="number"
-                style={{ width: 90 }}
+                className="form-control d-inline"
+                style={{ width: "auto" }}
                 min={1}
                 max={product.Stock}
                 step={1}
                 placeholder={1}
               />
               <button
-                className="btn btn-primary"
+                className="btn btn-dark"
                 type="button"
                 style={{
-                  height: 30,
+                  height: 40,
                   paddingBottom: 0,
                   paddingTop: 0,
                   width: 200,
                   marginLeft: 35,
-                  borderRadius: 5,
                 }}
               >
                 ADD TO CART

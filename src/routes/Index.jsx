@@ -1,6 +1,6 @@
 import { getProducts } from "../data/client";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ProductCard from "../components/ProductCard";
@@ -11,13 +11,18 @@ import ProductCard from "../components/ProductCard";
 const Index = (props) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getProducts({"perPage": 4}).then((res) => {
-      setProducts(res);
-      setLoading(false);
-    });
-  }, []);
+    getProducts({ perPage: 5 })
+      .then((res) => {
+        setProducts(res);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [navigate]);
 
   const featuredProducts = products.filter((it) => it.Featured === true);
 
