@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getProducts } from "../data/client";
 import ProductCard from "../components/ProductCard";
-import NavBar from "../components/Navbar";
+import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 export default function Products() {
@@ -37,7 +37,7 @@ export default function Products() {
   return (
     !loading && (
       <>
-        <NavBar />
+        <Navbar />
         <div className="container py-4 py-xl-5">
           <div className="row mb-5">
             <div className="col-md-8 col-xl-6 text-center mx-auto">

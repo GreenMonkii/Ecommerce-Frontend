@@ -5,16 +5,24 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ImageSwiper from "../components/Swiper";
 import { average, range } from "../constants/constants";
+import { addToCart } from "../data/client";
+import { getItem } from "../utils/local-storage";
 
 const Product = () => {
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [quantity, setQuantity] = useState(1);
   let params = useParams();
-  console.log(params.productId);
+  const token = getItem("token");
+
+  const handleAddToCart = () => {
+    addToCart(product?._id, quantity, token).then(() => {
+      alert("Product added to cart");
+    });
+  };
 
   useEffect(() => {
     getProductById(params.productId).then((res) => {
-      console.log(res);
       setProduct(res);
       setLoading(false);
     });
@@ -101,6 +109,8 @@ const Product = () => {
               <input
                 type="number"
                 className="form-control d-inline"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
                 style={{ width: "auto" }}
                 min={1}
                 max={product.Stock}
@@ -117,6 +127,7 @@ const Product = () => {
                   width: 200,
                   marginLeft: 35,
                 }}
+                onClick={handleAddToCart}
               >
                 ADD TO CART
               </button>

@@ -1,22 +1,38 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cart from "../routes/Cart";
 import { getCartItems } from "../data/client";
+import Logo from "../assets/img/logo.png";
+import useToken from "../hooks/token";
 
-const Navbar = (props) => {
+const Navbar = () => {
+  const { token, isValid } = useToken();
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const [cart, setCart] = useState([]);
+  const navigate = useNavigate();
+
+  const redirectToLogin = () => {
+    navigate("/login", { redirect: "/" });
+  };
 
   useEffect(() => {
-    getCartItems()
-      .then((res) => {
-        setCart(res);
-      })
-      .catch((err) => {
+    const fetchCartItems = async () => {
+      try {
+        if (isOpen && isValid) {
+          const res = await getCartItems(token);
+          console.log(res);
+          setCart(res);
+        } else if (isOpen && !isValid) {
+          navigate("/login");
+        }
+      } catch (err) {
         console.error(err);
-      });
-  }, [isOpen]);
+      }
+    };
+
+    fetchCartItems();
+  }, [isOpen, isValid, navigate, token]);
 
   const routes = [
     { name: "Products", path: "products" },
@@ -28,7 +44,12 @@ const Navbar = (props) => {
       <nav className="navbar navbar-expand-md bg-body">
         <div className="container-fluid">
           <Link className="navbar-brand" to={`/`} style={{ color: "#A0373E" }}>
-            Buzzmart
+            <img
+              src={Logo}
+              alt="logo"
+              height="75"
+              style={{ maxWidth: "100%" }}
+            />
           </Link>
           <button
             data-bs-toggle="collapse"
@@ -55,14 +76,25 @@ const Navbar = (props) => {
                 </Link>
               );
             })}
-            <button
-              className="btn btn-dark ms-auto"
-              type="button"
-              style={{ textAlign: "left" }}
-              onClick={toggle}
-            >
-              VIEW CART
-            </button>
+            {isValid ? (
+              <button
+                className="btn btn-dark ms-auto"
+                type="button"
+                style={{ textAlign: "left" }}
+                onClick={toggle}
+              >
+                VIEW CART
+              </button>
+            ) : (
+              <button
+                className="btn btn-dark ms-auto"
+                type="button"
+                style={{ textAlign: "left" }}
+                onClick={redirectToLogin}
+              >
+                LOGIN
+              </button>
+            )}
           </div>
         </div>
       </nav>

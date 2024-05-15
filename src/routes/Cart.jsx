@@ -1,24 +1,28 @@
-import React from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import React from "react";
+import { Offcanvas, OffcanvasHeader, OffcanvasBody } from "reactstrap";
 
 const Cart = ({ isOpen, toggle, items }) => {
-    return (
-        <Modal isOpen={isOpen} toggle={toggle}>
-            <ModalHeader toggle={toggle}>Shopping Cart</ModalHeader>
-            <ModalBody>
-                {items.map((item, index) => (
-                    <div key={index}>
-                        <h5>{item.name}</h5>
-                        <p>Price: ${item.price}</p>
-                        <p>Quantity: {item.quantity}</p>
-                    </div>
-                ))}
-            </ModalBody>
-            <ModalFooter>
-                <Button color="secondary" onClick={toggle}>Close</Button>
-            </ModalFooter>
-        </Modal>
-    );
+  return (
+    <Offcanvas
+      isOpen={isOpen}
+      toggle={toggle}
+      backdrop={true}
+      direction="end"
+      scrollable={true}
+    >
+      <OffcanvasHeader toggle={toggle}>Shopping Cart</OffcanvasHeader>
+      <OffcanvasBody>
+        {items.map((entry, index) => (
+          <div key={index} className="bg-body-tertiary p-2 mb-2 rounded">
+            <h5>{entry.product.Name}</h5>
+            <p>Price: ${entry.product.Price}</p>
+            <p>Quantity: {entry.quantity}</p>
+          </div>
+        ))}
+        <button className="btn btn-dark mt-3">Checkout</button>
+      </OffcanvasBody>
+    </Offcanvas>
+  );
 };
 
 export default Cart;

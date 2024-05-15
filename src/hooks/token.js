@@ -1,20 +1,23 @@
-import { useEffect } from "react";
-import useLocalStorage from "./local-storage";
+import { useState, useEffect } from "react";
+import { isTokenValid } from "../auth/auth";
+import { getItem } from "../utils/local-storage";
 
 const useToken = () => {
-  const [token, setToken] = useLocalStorage("token");
+  const [token] = useState(() => getItem("token") || null);
+  const [isValid, setIsValid] = useState(false);
 
   useEffect(() => {
-    const storedToken = token;
+    const checkTokenValidity = async (storedToken) => {
+      if (storedToken) {
+        const res = await isTokenValid(storedToken);
+        setIsValid(res);
+      }
+    };
 
-    if (storedToken) {
-      setToken(storedToken);
-    }
-  }, [token, setToken]);
+    checkTokenValidity(token);
+  }, [token]);
 
-  const isLoggedIn = !!token;
-
-  return isLoggedIn;
+  return { token, isValid };
 };
 
 export default useToken;

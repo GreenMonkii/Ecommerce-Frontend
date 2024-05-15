@@ -1,8 +1,6 @@
-// import Swiper core and required modules
 import { Navigation } from "swiper/modules";
 import { SwiperSlide, Swiper } from "swiper/react";
 
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -11,7 +9,6 @@ import "swiper/css/scrollbar";
 const ImageSwiper = (props) => {
   return (
     <Swiper
-      // install Swiper modules
       modules={[Navigation]}
       slidesPerView={1}
       navigation={{
