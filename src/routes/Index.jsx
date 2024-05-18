@@ -1,5 +1,5 @@
 import { getProducts } from "../data/client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -8,10 +8,14 @@ import ProductCard from "../components/ProductCard";
 // A product is a Javascript Object to represent the model that we will create in the backend.
 // It consists of the following properties: Name, Price, Description, Image, Retailer, Category, Featured.
 
-const Index = (props) => {
+const Index = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const myRef = useRef(null);
   const navigate = useNavigate();
+
+  const executeScroll = () =>
+    myRef.current.scrollIntoView({ behavior: "smooth" });
 
   useEffect(() => {
     getProducts({ perPage: 5 })
@@ -51,33 +55,34 @@ const Index = (props) => {
                         Earphones
                       </p>
                       <div className="my-3">
+                        <button
+                          className="btn btn-primary"
+                          onClick={executeScroll}
+                          type="button"
+                          style={{
+                            background: "#A0373E",
+                            borderRadius: "3%",
+                          }}
+                        >
+                          VIEW MORE
+                        </button>
                         <Link
                           to={`/products/${featuredProducts[0]._id}`}
                           preventScrollReset={true}
                         >
                           <button
-                            className="btn btn-primary"
+                            className="btn btn-secondary"
                             type="button"
                             style={{
-                              background: "#A0373E",
+                              marginLeft: 26,
+                              marginRight: 0,
+                              color: "#747C6D",
                               borderRadius: "3%",
                             }}
                           >
-                            VIEW MORE
+                            ADD TO CART
                           </button>
                         </Link>
-                        <button
-                          className="btn btn-secondary"
-                          type="button"
-                          style={{
-                            marginLeft: 26,
-                            marginRight: 0,
-                            color: "#747C6D",
-                            borderRadius: "3%",
-                          }}
-                        >
-                          ADD TO CART
-                        </button>
                       </div>
                     </div>
                   </div>
@@ -99,7 +104,7 @@ const Index = (props) => {
             </div>
           </section>
         </div>
-        <div className="container py-4 py-xl-5">
+        <div className="container py-4 py-xl-5" ref={myRef}>
           <div className="row mb-5">
             <div className="col-md-8 col-xl-6 text-center mx-auto">
               <h2>

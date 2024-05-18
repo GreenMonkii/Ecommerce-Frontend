@@ -1,38 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Cart from "../routes/Cart";
-import { getCartItems } from "../data/client";
+import Cart from "./Cart";
 import Logo from "../assets/img/logo.png";
 import useToken from "../hooks/token";
 
 const Navbar = () => {
-  const { token, isValid } = useToken();
+  const { isValid } = useToken();
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
-  const [cart, setCart] = useState([]);
   const navigate = useNavigate();
 
   const redirectToLogin = () => {
     navigate("/login", { redirect: "/" });
   };
-
-  useEffect(() => {
-    const fetchCartItems = async () => {
-      try {
-        if (isOpen && isValid) {
-          const res = await getCartItems(token);
-          console.log(res);
-          setCart(res);
-        } else if (isOpen && !isValid) {
-          navigate("/login");
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchCartItems();
-  }, [isOpen, isValid, navigate, token]);
 
   const routes = [
     { name: "Products", path: "products" },
@@ -98,7 +78,7 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-      <Cart isOpen={isOpen} toggle={toggle} items={cart} />
+      <Cart isOpen={isOpen} toggle={toggle} />
     </>
   );
 };

@@ -7,18 +7,33 @@ import ImageSwiper from "../components/Swiper";
 import { average, range } from "../constants/constants";
 import { addToCart } from "../data/client";
 import { getItem } from "../utils/local-storage";
+import { Alert } from "reactstrap";
 
 const Product = () => {
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
+  const [alert, setAlert] = useState(false);
+  const [success, setSuccess] = useState(false);
   let params = useParams();
   const token = getItem("token");
 
   const handleAddToCart = () => {
-    addToCart(product?._id, quantity, token).then(() => {
-      alert("Product added to cart");
-    });
+    addToCart(product?._id, quantity, token)
+      .then(() => {
+        setSuccess(true);
+        setAlert(true);
+        setTimeout(() => {
+          setAlert(false);
+        }, 2000);
+      })
+      .catch(() => {
+        setSuccess(false);
+        setAlert(true);
+        setTimeout(() => {
+          setAlert(false);
+        }, 2000);
+      });
   };
 
   useEffect(() => {
@@ -131,9 +146,20 @@ const Product = () => {
               >
                 ADD TO CART
               </button>
+              <Alert
+                style={{ position: "fixed", top: 0, right: 0, zIndex: 9999 }}
+                color={success ? "success" : "danger"}
+                isOpen={alert}
+                toggle={() => setAlert(false)}
+              >
+                {success
+                  ? "Item has been added to cart!"
+                  : "An error occured while adding item to cart!"}
+              </Alert>
             </div>
           </div>
         </div>
+
         <div className="container py-4 py-xl-5" style={{ marginTop: "14.5px" }}>
           <div className="row mb-5">
             <div className="col-md-8 col-xl-6 text-center mx-auto">

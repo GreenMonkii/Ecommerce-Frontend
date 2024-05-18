@@ -10,6 +10,7 @@ import Index from "./routes/Index";
 import Products from "./routes/Products";
 import Signup from "./routes/Signup";
 import Login from "./routes/Login";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 const router = createBrowserRouter([
   {
