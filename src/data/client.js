@@ -53,3 +53,21 @@ export const removeFromCart = async (cartItemID, token) => {
     throw new ApiError("Failed to remove product from cart");
   }
 };
+
+export const addReview = async (productID, rating, comment, token) => {
+  const response = await fetch(
+    `${process.env.REACT_APP_API_URL}/products/${productID}/reviews`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      body: JSON.stringify({ rating, comment }),
+    }
+  );
+  if (!response.ok) {
+    const data = await response.json();
+    throw new ApiError(data.message);
+  }
+};

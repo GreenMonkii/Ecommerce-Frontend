@@ -10,6 +10,7 @@ import Index from "./routes/Index";
 import Products from "./routes/Products";
 import Signup from "./routes/Signup";
 import Login from "./routes/Login";
+import Reviews from "./routes/Reviews";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 const router = createBrowserRouter([
@@ -40,6 +41,11 @@ const router = createBrowserRouter([
   {
     path: "/products/:productId",
     element: <Product />,
+    errorElement: <ServerErrorPage />,
+  },
+  {
+    path: "/reviews",
+    element: <Reviews />,
     errorElement: <ServerErrorPage />,
   },
 ]);

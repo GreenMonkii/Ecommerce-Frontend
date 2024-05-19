@@ -1,14 +1,13 @@
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer"
+import Footer from "../components/Footer";
 
 const About = () => {
   return (
     <>
       <Navbar />
       <div className="container">
-        <h2 style={{ textAlign: "left" }}>
-          <span style={{ textDecoration: "underline" }}>About us</span>
-        </h2>
+        <h2 className="text-left text-dark">About us</h2>
+        <hr className="border border-dark opacity-100" />
         <p>
           <br />
           <span

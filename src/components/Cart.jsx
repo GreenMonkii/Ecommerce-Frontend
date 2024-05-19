@@ -47,7 +47,7 @@ const Cart = ({ isOpen, toggle }) => {
     <Offcanvas
       isOpen={isOpen}
       toggle={toggle}
-      backdrop="static"
+      backdrop={true}
       direction="end"
       scrollable={true}
     >

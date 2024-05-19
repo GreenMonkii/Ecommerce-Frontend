@@ -5,9 +5,6 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ProductCard from "../components/ProductCard";
 
-// A product is a Javascript Object to represent the model that we will create in the backend.
-// It consists of the following properties: Name, Price, Description, Image, Retailer, Category, Featured.
-
 const Index = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -159,16 +156,18 @@ const Index = () => {
                             className="my-3"
                             style={{ textAlign: "left", overflow: "visible" }}
                           >
-                            <a
-                              className="btn btn-light btn-lg"
+                            <Link
+                              to="/products/6648fe6208602e9bc0f46342"
+                              className="btn btn-lg text-white"
+                              style={{
+                                background: "#28221d",
+                                borderRadius: 5,
+                              }}
                               id="check-it-out"
                               role="button"
-                              href="/"
                             >
-                              <span style={{ color: "rgb(40, 34, 29)" }}>
-                                CHECK IT OUT
-                              </span>
-                            </a>
+                              <span>CHECK IT OUT</span>
+                            </Link>
                           </div>
                         </div>
                       </div>
